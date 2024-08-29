@@ -19,6 +19,7 @@ model Departments {
   abreviation String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deletedAt   DateTime? @updatedAt
   tickets Tickets[]
   users Users[]
 }

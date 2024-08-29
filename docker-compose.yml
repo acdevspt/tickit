@@ -1,0 +1,15 @@
+services:
+  tickit-db:
+    image: 'postgres:latest'
+    container_name: 'tickit-db'
+    environment:
+      POSTGRES_DB: 'tickitdb'
+      POSTGRES_USER: 'username'
+      POSTGRES_PASSWORD: 'randompassword'
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'tickit-db:/var/lib/postgresql/data'
+
+volumes:
+  tickit-db:
