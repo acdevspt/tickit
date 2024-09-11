@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { TicketDto } from './dto/TicketDto';
 import { TicketsService } from './tickets.service';
-import { NotFoundError } from 'rxjs';
 
 @Controller('ticket')
 export class TicketsController {
@@ -38,7 +37,7 @@ export class TicketsController {
   @Get('/filter/?')
   async getUserTicket(
     @Query('user_uuid') userUuid: string,
-    @Query('priority') priority: string,
+    @Query('priority') priority: string
   ) {
     if (userUuid && !priority) {
       const user = this.ticketService.getUserTicket(userUuid);
@@ -54,32 +53,20 @@ export class TicketsController {
     }
   }
 
-  // get tickets by department
-  @Get()
-  @HttpCode(HttpStatus.OK)
-  async getTicketsByDepartment() {}
-
-  // edit a ticket
-  @Put('/:ticket_uuid')
-  @HttpCode(HttpStatus.OK)
-  async editTicket(@Body() ticket: TicketDto) {
-    return '';
-  }
-
   // remove a ticket
   @Delete('/:ticket_uuid')
   @HttpCode(HttpStatus.OK)
-  async removeTicket(ticketUuid: string) {
-    return '';
+  async removeTicket(@Param("ticket_uuid") ticketUuid: string) {
+    return await this.ticketService.removeTicket(ticketUuid)
   }
 
   // updates the ticket status (solved or unsolved)
-  @Patch('/:ticket_uuid/status')
+  @Put('/:ticket_uuid/status')
   @HttpCode(HttpStatus.OK)
   async updateTicketStatus(
-    @Param('ticket_uuid') sneakerUuid: string,
-    @Body() body: string,
+    @Param('ticket_uuid') ticketUuid: string,
+    @Body() data: string,
   ) {
-    return '';
+    return this.ticketService.updateTicketStatus(ticketUuid, data["status"])
   }
 }

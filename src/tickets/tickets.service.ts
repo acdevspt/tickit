@@ -25,19 +25,25 @@ export class TicketsService {
     return this.prisma.tickets.findMany();
   }
 
-  // edit a ticket
-  async editTicket(ticket: TicketDto) {
-    return '';
-  }
-
   // remove a ticket
   async removeTicket(ticketUuid: string) {
-    return '';
+    return await this.prisma.tickets.delete({
+        where: {
+            id: ticketUuid
+        }
+    })
   }
 
   // set ticket as solved
   async updateTicketStatus(ticketUuid: string, status: string) {
-    return '';
+    return await this.prisma.tickets.update({
+        where: {
+            id: ticketUuid
+        },
+        data: {
+            status: status
+        }
+    })
   }
 
   // get user tickets
