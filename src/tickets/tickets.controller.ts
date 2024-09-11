@@ -7,6 +7,7 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -60,7 +61,7 @@ export class TicketsController {
   }
 
   // updates the ticket status (solved or unsolved)
-  @Put('/:ticket_uuid/status')
+  @Patch('/:ticket_uuid/status')
   @HttpCode(HttpStatus.OK)
   async updateTicketStatus(
     @Param('ticket_uuid') ticketUuid: string,
