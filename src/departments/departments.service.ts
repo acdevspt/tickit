@@ -9,12 +9,11 @@ export class DepartmentsService {
   async addDepartment(dto: DepartmentDto) {
     try {
       return await this.prisma.departments.create({
-        data: dto
-      })
+        data: dto,
+      });
     } catch {
-      throw new BadRequestException()
+      throw new BadRequestException();
     }
-    
   }
 
   // get all departments
@@ -26,11 +25,11 @@ export class DepartmentsService {
   async getNameOfAbreviation(abreviation: string) {
     return await this.prisma.departments.findUnique({
       where: {
-        abreviation: abreviation
+        abreviation: abreviation,
       },
       select: {
-        name: true
-      }
+        name: true,
+      },
     });
   }
 
@@ -38,20 +37,20 @@ export class DepartmentsService {
   async deleteDepartment(departmentUuid: string) {
     return await this.prisma.departments.delete({
       where: {
-        uuid: departmentUuid
-      }
-    })
+        uuid: departmentUuid,
+      },
+    });
   }
 
   // update a department abreviation (PATCH)
   async updateDepartmentAbreviation(departmentUuid: string, abv: string) {
     return await this.prisma.departments.update({
       where: {
-        uuid: departmentUuid
+        uuid: departmentUuid,
       },
       data: {
-        abreviation: abv
-      }
+        abreviation: abv,
+      },
     });
   }
 
@@ -59,11 +58,11 @@ export class DepartmentsService {
   async updateDepartmentName(departmentUuid: string, name: string) {
     return await this.prisma.departments.update({
       where: {
-        uuid: departmentUuid
+        uuid: departmentUuid,
       },
       data: {
-        name: name
-      }
+        name: name,
+      },
     });
   }
 }
