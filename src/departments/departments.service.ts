@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { DepartmentDto } from './dto/departments.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class DepartmentsService {
+  constructor(private prisma: PrismaService) {}
   // create a new department
   async addDepartment(dto: DepartmentDto) {
-    return 0;
+    return await this.prisma.departments.create({
+      data: dto
+    })
   }
 
   // get all departments
   async getAllDepartments() {
-    return 0;
+    return await this.prisma.departments.findMany();
   }
 
   // get name of specific abreviation
