@@ -30,10 +30,10 @@ export class DepartmentsController {
   }
 
   // get name of specific abreviation
-  @Get('/:department_uuid')
+  @Get('/:abreviation')
   @HttpCode(HttpStatus.OK)
-  async getNameOfAbreviation(@Param('department_uuid') departmentUuid: string) {
-    return await this.departmentService.getNameOfAbreviation(departmentUuid);
+  async getNameOfAbreviation(@Param('abreviation') abreviation: string) {
+    return await this.departmentService.getNameOfAbreviation(abreviation);
   }
 
   // delete a specific department
@@ -48,11 +48,11 @@ export class DepartmentsController {
   @HttpCode(HttpStatus.OK)
   async updateDepartmentAbreviation(
     @Param('department_uuid') departmentUuid: string,
-    @Body() abv: string,
+    @Body() data: string,
   ) {
     return await this.departmentService.updateDepartmentAbreviation(
       departmentUuid,
-      abv,
+      data["abreviation"],
     );
   }
 
@@ -61,11 +61,11 @@ export class DepartmentsController {
   @HttpCode(HttpStatus.OK)
   async updateDepartmentName(
     @Param('department_uuid') departmentUuid: string,
-    @Body() name: string,
+    @Body() data: string,
   ) {
     return await this.departmentService.updateDepartmentName(
       departmentUuid,
-      name,
+      data["name"],
     );
   }
 }
