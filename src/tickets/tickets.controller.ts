@@ -7,7 +7,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  Patch,
   Post,
   Put,
   Query,
@@ -37,7 +36,7 @@ export class TicketsController {
   @Get('/filter/?')
   async getUserTicket(
     @Query('user_uuid') userUuid: string,
-    @Query('priority') priority: string
+    @Query('priority') priority: string,
   ) {
     if (userUuid && !priority) {
       const user = this.ticketService.getUserTicket(userUuid);
@@ -49,15 +48,15 @@ export class TicketsController {
     } else if (priority && !userUuid) {
       return this.ticketService.getTicketsByPriority(priority);
     } else if (priority && userUuid) {
-        return this.ticketService.getUserTicketsByPriority(userUuid, priority);
+      return this.ticketService.getUserTicketsByPriority(userUuid, priority);
     }
   }
 
   // remove a ticket
   @Delete('/:ticket_uuid')
   @HttpCode(HttpStatus.OK)
-  async removeTicket(@Param("ticket_uuid") ticketUuid: string) {
-    return await this.ticketService.removeTicket(ticketUuid)
+  async removeTicket(@Param('ticket_uuid') ticketUuid: string) {
+    return await this.ticketService.removeTicket(ticketUuid);
   }
 
   // updates the ticket status (solved or unsolved)
@@ -67,6 +66,6 @@ export class TicketsController {
     @Param('ticket_uuid') ticketUuid: string,
     @Body() data: string,
   ) {
-    return this.ticketService.updateTicketStatus(ticketUuid, data["status"])
+    return this.ticketService.updateTicketStatus(ticketUuid, data['status']);
   }
 }

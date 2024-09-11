@@ -28,22 +28,22 @@ export class TicketsService {
   // remove a ticket
   async removeTicket(ticketUuid: string) {
     return await this.prisma.tickets.delete({
-        where: {
-            id: ticketUuid
-        }
-    })
+      where: {
+        id: ticketUuid,
+      },
+    });
   }
 
   // set ticket as solved
   async updateTicketStatus(ticketUuid: string, status: string) {
     return await this.prisma.tickets.update({
-        where: {
-            id: ticketUuid
-        },
-        data: {
-            status: status
-        }
-    })
+      where: {
+        id: ticketUuid,
+      },
+      data: {
+        status: status,
+      },
+    });
   }
 
   // get user tickets
