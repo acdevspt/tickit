@@ -1,7 +1,7 @@
 export class TicketDto {
-    userUuid: string
-    department_uuid: string
-    priority: string
-    title: string
-    description: string
+  userUuid: string;
+  departmentUuid: string;
+  priority: string;
+  title: string;
+  description: string;
 }

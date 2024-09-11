@@ -14,25 +14,25 @@ datasource db {
 }
 
 model Departments {
-  uuid          String   @id @default(uuid())
-  name        String   @unique
-  abreviation String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  uuid        String    @id @default(uuid())
+  name        String    @unique
+  abreviation String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
-  tickets Tickets[]
-  users Users[]
+  tickets     Tickets[]
+  users       Users[]
 }
 
 model Users {
-  uuid          String @id @default(uuid())
-  firstName   String
-  lastName    String
+  uuid           String       @id @default(uuid())
+  firstName      String
+  lastName       String
   departments    Departments? @relation(fields: [departmentUuid], references: [uuid])
   departmentUuid String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tickets Tickets[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  tickets        Tickets[]
 }
 
 model Tickets {
@@ -43,9 +43,9 @@ model Tickets {
   departmentUuid String
   priority       String
   title          String
-  description    String @db.Text
-  status         String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  description    String      @db.Text
+  status         String      @default("Unsolved")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   deletedAt      DateTime?
 }
