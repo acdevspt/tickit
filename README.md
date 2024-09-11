@@ -39,9 +39,6 @@ $ npm run test:cov
 
 ## API Documentation
 
-
-## Documentação da API
-
 ### Departments
 
 #### Add new department
