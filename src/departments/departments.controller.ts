@@ -14,33 +14,33 @@ import { DepartmentsService } from './departments.service';
 
 @Controller('department')
 export class DepartmentsController {
-  constructor(private readonly departmentService: DepartmentsService) {}
+  constructor(private readonly userService: DepartmentsService) {}
   // create a new department
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async addDepartment(@Body() dto: DepartmentDto) {
-    return await this.departmentService.addDepartment(dto);
+    return await this.userService.addDepartment(dto);
   }
 
   // get all departments
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAllDepartments() {
-    return await this.departmentService.getAllDepartments();
+    return await this.userService.getAllDepartments();
   }
 
   // get name of specific abreviation
   @Get('/:abreviation')
   @HttpCode(HttpStatus.OK)
   async getNameOfAbreviation(@Param('abreviation') abreviation: string) {
-    return await this.departmentService.getNameOfAbreviation(abreviation);
+    return await this.userService.getNameOfAbreviation(abreviation);
   }
 
   // delete a specific department
   @Delete('/:department_uuid')
   @HttpCode(HttpStatus.OK)
   async deleteDepartment(@Param('department_uuid') departmentUuid: string) {
-    return await this.departmentService.deleteDepartment(departmentUuid);
+    return await this.userService.deleteDepartment(departmentUuid);
   }
 
   // update a department abreviation (PATCH)
@@ -50,7 +50,7 @@ export class DepartmentsController {
     @Param('department_uuid') departmentUuid: string,
     @Body() data: string,
   ) {
-    return await this.departmentService.updateDepartmentAbreviation(
+    return await this.userService.updateDepartmentAbreviation(
       departmentUuid,
       data["abreviation"],
     );
@@ -63,7 +63,7 @@ export class DepartmentsController {
     @Param('department_uuid') departmentUuid: string,
     @Body() data: string,
   ) {
-    return await this.departmentService.updateDepartmentName(
+    return await this.userService.updateDepartmentName(
       departmentUuid,
       data["name"],
     );

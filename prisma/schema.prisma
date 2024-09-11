@@ -25,11 +25,11 @@ model Departments {
 }
 
 model Users {
-  uuid          String @id
+  uuid          String @id @default(uuid())
   firstName   String
   lastName    String
-  departments    Departments @relation(fields: [departmentUuid], references: [uuid])
-  departmentUuid String
+  departments    Departments? @relation(fields: [departmentUuid], references: [uuid])
+  departmentUuid String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   tickets Tickets[]
