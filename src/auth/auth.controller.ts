@@ -20,7 +20,7 @@ export class AuthController {
     }
 
     @Public()
-    @Post("signUp")
+    @Post("signup")
     @HttpCode(HttpStatus.CREATED)
     async signUp(@Body() dto: AuthDto) {
         return this.authService.signUp(dto)
