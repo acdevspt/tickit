@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   hashPassword(password: string) {
-    return bcrypt.hash(password, 10)
+    return bcrypt.hash(password, 10);
   }
 
   async signIn(dto: AuthDto) {
@@ -38,56 +38,59 @@ export class AuthService {
     }
 
     const tokens = await this.generateTokens(user.id, user.username);
-    await this.updateRefreshTokens(user.id, tokens.refresh_token)
+    await this.updateRefreshTokens(user.id, tokens.refresh_token);
     return tokens;
   }
 
   async signUp(dto: AuthDto) {
-    const hashedPassword = await this.hashPassword(dto.password)
+    const hashedPassword = await this.hashPassword(dto.password);
     const newUser = await this.prisma.credentials.create({
-        data: {
-            username: dto.username,
-            hashedPassword: hashedPassword
-        }
-    })
+      data: {
+        username: dto.username,
+        hashedPassword: hashedPassword,
+      },
+    });
 
-    const tokens = await this.generateTokens(newUser.id, newUser.username)
-    await this.updateRefreshTokens(newUser.id, tokens.refresh_token)
+    const tokens = await this.generateTokens(newUser.id, newUser.username);
+    await this.updateRefreshTokens(newUser.id, tokens.refresh_token);
   }
 
   async logout(credentialsUuid: string) {
     await this.prisma.credentials.update({
-        where: {
-            id: credentialsUuid,
-            hashedRefreshToken: {
-                not: null
-            }
-        }, 
-        data: {
-            hashedRefreshToken: null
-        }
-    })
+      where: {
+        id: credentialsUuid,
+        hashedRefreshToken: {
+          not: null,
+        },
+      },
+      data: {
+        hashedRefreshToken: null,
+      },
+    });
   }
 
   // @method = this will be used to refresh the tokens when the refresh token expires
   async refreshTokens(credentialUuid: string, refreshToken: string) {
     const user = await this.prisma.credentials.findUnique({
-        where: {
-            id: credentialUuid
-        }
-    })
+      where: {
+        id: credentialUuid,
+      },
+    });
 
-    const refreshTokenMatches = await argon.verify(user.hashedRefreshToken, refreshToken)
+    const refreshTokenMatches = await argon.verify(
+      user.hashedRefreshToken,
+      refreshToken,
+    );
     if (!refreshTokenMatches) {
-        throw new ForbiddenException("Access Denied")
-      }
-    
-    const tokens = await this.generateTokens(user.id, user.username)
-    await this.updateRefreshTokens(user.id, tokens.refresh_token)
-    return tokens
+      throw new ForbiddenException('Access Denied');
+    }
+
+    const tokens = await this.generateTokens(user.id, user.username);
+    await this.updateRefreshTokens(user.id, tokens.refresh_token);
+    return tokens;
   }
 
-  // @method = to get the user tokens
+  // @method = to generate new user tokens
   // @parameters = information that I want to put in the token
   async generateTokens(credentialUuid: string, username: String) {
     const [accessToken, refreshToken] = await Promise.all([
@@ -122,14 +125,14 @@ export class AuthService {
 
   // @method = update the refresh token of a user
   async updateRefreshTokens(credentialsUuid: string, refreshToken: string) {
-    const hashToken = await argon.hash(refreshToken)
+    const hashToken = await argon.hash(refreshToken);
     await this.prisma.credentials.update({
-        where: {
-            id: credentialsUuid
-        },
-        data: {
-            hashedRefreshToken: hashToken
-        }
-    })
+      where: {
+        id: credentialsUuid,
+      },
+      data: {
+        hashedRefreshToken: hashToken,
+      },
+    });
   }
 }
