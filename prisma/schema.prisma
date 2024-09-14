@@ -49,3 +49,13 @@ model Tickets {
   updatedAt      DateTime    @updatedAt
   deletedAt      DateTime?
 }
+
+model Credentials {
+  id String @id @default(uuid())
+  username String @unique
+  hashedPassword String @map("hashed_password")
+  hashedRefreshToken String? @map("hashed_refresh_token")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  deletedAt      DateTime?
+}
