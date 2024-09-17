@@ -100,7 +100,7 @@ export class AuthService {
           username: username,
         },
         {
-          expiresIn: 15 * 60,
+          expiresIn: 1 * 60,
           secret: jwtConstants.secretKey,
         },
       ),
@@ -111,7 +111,7 @@ export class AuthService {
           username: username,
         },
         {
-          expiresIn: 24 * 7 * 60 * 60,
+          expiresIn: 1*60,//24 * 7 * 60 * 60,
           secret: jwtConstants.secretKey,
         },
       ),

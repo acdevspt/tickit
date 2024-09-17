@@ -27,6 +27,7 @@ export class AccessTokenGuard extends AuthGuard('jwt') {
   }
 
   handleRequest(err, user, info: Error) {
+    console.log(user)
     if (info instanceof TokenExpiredError) {
       // do stuff when token is expired
       console.log('token expired');
